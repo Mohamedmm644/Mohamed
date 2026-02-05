@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الطنطاوي للصيانة | خدمات احترافية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* إعدادات التصميم العامة - CSS */
+        :root {
+            --primary-color: #ffcc00; /* اللون الذهبي */
+            --bg-black: #0f0f0f;      /* خلفية سوداء داكنة */
+            --card-bg: #1a1a1a;       /* لون البطاقات */
+            --text-white: #ffffff;
+            --accent-color: #28a745;  /* لون زر الاتصال */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* واجهة الموقع - Hero Section */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-color);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 15px rgba(255, 204, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-top: 10px;
+        }
+
+        /* قسم عمال الشركة */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .workers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.4s;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.1);
+        }
+
+        .card i.user-icon {
+            font-size: 60px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* الأزرار */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn-info {
+            background-color: var(--primary-color);
+            color: #000;
+        }
+
+        .btn-info:hover { background-color: #e6b800; }
+
+        .btn-call {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-call:hover { background-color: #218838; }
+
+        /* النافذة المنبثقة - Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            margin: 10% auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            position: relative;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; left: 20px;
+            font-size: 30px;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .modal h3 {
+            color: var(--primary-color);
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .modal ul {
+            padding-right: 20px;
+            text-align: right;
+        }
+
+        .modal li { margin-bottom: 10px; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>الطنطاوي للصيانة</h1>
+        <p>خبراء في الكهرباء والأجهزة المنزلية.. أمانة في العمل وسرعة في التنفيذ</p>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">فريق العمل المتخصص</h2>
+        
+        <div class="workers-grid">
+            <div class="card">
+                <i class="fas fa-user-cog user-icon"></i>
+                <h2>طنطاوي محمد</h2>
+                <div class="btn-group">
+                    <button class="btn btn-info" onclick="showDetails('tantawy')">عرض التخصصات والبيانات</button>
+                    <a href="tel:01065276891" class="btn btn-call"><i class="fas fa-phone-alt"></i> اتصل الآن</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-user-tie user-icon"></i>
+                <h2>محمود طنطاوي</h2>
+                <div class="btn-group">
+                    <button class="btn btn-info" onclick="showDetails('mahmoud')">عرض التخصصات والبيانات</button>
+                    <a href="tel:01099064625" class="btn btn-call"><i class="fas fa-phone-alt"></i> اتصل الآن</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tantawy" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideDetails('tantawy')">&times;</span>
+            <h3>بيانات الفني: طنطاوي محمد</h3>
+            <p><strong>رقم الهاتف:</strong> 01065276891</p>
+            <p><strong>التخصصات المعتمدة:</strong></p>
+            <ul>
+                <li>فني كهرباء سلسيون</li>
+                <li>فني بوتوجازات</li>
+                <li>فني سخانات غاز</li>
+                <li>فني سخانات كهرباء</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="mahmoud" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideDetails('mahmoud')">&times;</span>
+            <h3>بيانات الفني: محمود طنطاوي</h3>
+            <p><strong>رقم الهاتف:</strong> 01099064625</p>
+            <p><strong>التخصص:</strong></p>
+            <ul>
+                <li>فني كهرباء سلسيون خبير</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 جميع الحقوق محفوظة لشركة الطنطاوي للصيانة
+    </footer>
+
+    <script>
+        function showDetails(id) {
+            document.getElementById(id).style.display = "block";
+        }
+
+        function hideDetails(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // إغلاق النافذة عند الضغط خارجها
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
