@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الطنطاوي للصيانة | واجهة احترافية</title>
+    <title>الطنطاوي للصيانة | واجهة احترافية مطورة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary: #ffcc00;
-            --bg: #0a0a0a;
-            --card: #161616;
+            --primary-hover: #ffdb4d;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.05);
             --text: #ffffff;
-            --call: #25d366;
+            --call-color: #28a745;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         body {
@@ -19,191 +21,266 @@
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
-            padding: 0;
+            overflow-x: hidden;
         }
 
-        /* رأس الصفحة */
+        /* تأثير الخلفية المتحركة */
         header {
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                        url('https://images.unsplash.com/photo-1581094288338-2314dddb7bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
+                        url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
-            background-position: center;
+            background-attachment: fixed;
             height: 50vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-bottom: 4px solid var(--primary);
+            border-bottom: 2px solid var(--primary);
+            animation: fadeInDown 1s ease;
         }
 
         header h1 {
-            font-size: 3rem;
+            font-size: clamp(2rem, 8vw, 3.5rem);
             color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin: 0;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
         /* شبكة العمال */
         .workers-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 50px 10%;
+            gap: 30px;
+            padding: 60px 8%;
         }
 
         .worker-card {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 30px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px 20px;
             text-align: center;
-            border: 1px solid #333;
-            transition: 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            position: relative;
         }
 
         .worker-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.02);
             border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+            background: rgba(255, 204, 0, 0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
         .worker-card i.avatar {
-            font-size: 50px;
+            font-size: 60px;
             color: var(--primary);
-            margin-bottom: 15px;
+            background: rgba(255, 204, 0, 0.1);
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            transition: var(--transition);
         }
 
-        .worker-card h2 { margin: 10px 0; font-size: 1.6rem; }
+        .worker-card:hover i.avatar {
+            transform: rotateY(360deg);
+            background: var(--primary);
+            color: #000;
+        }
 
-        /* الأزرار */
+        /* تأثيرات الأزرار */
         .btn {
-            display: block;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             margin: 10px 0;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
-            cursor: pointer;
+            overflow: hidden;
             border: none;
-            transition: 0.3s;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 1;
         }
 
-        .btn-info { background: var(--primary); color: #000; }
-        .btn-call { background: var(--call); color: #fff; }
-        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-info { background: var(--primary); color: #000; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3); }
+        .btn-call { background: transparent; color: var(--call-color); border: 2px solid var(--call-color); }
+        .btn-call:hover { background: var(--call-color); color: #fff; box-shadow: 0 0 20px var(--call-color); }
 
-        /* النوافذ المنبثقة */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        .btn:hover::before { left: 100%; }
+
+        /* تجميل Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 100;
+            z-index: 1000;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.95);
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
-            background: var(--card);
-            margin: 15% auto;
-            padding: 30px;
+            background: #111;
+            margin: 10% auto;
+            padding: 40px;
             width: 85%;
-            max-width: 450px;
-            border-radius: 15px;
-            border: 2px solid var(--primary);
+            max-width: 500px;
+            border-radius: 30px;
+            border: 1px solid var(--primary);
             position: relative;
-            text-align: right;
+            animation: popIn 0.4s forwards;
         }
 
-        .close {
-            position: absolute;
-            top: 10px; left: 20px;
-            font-size: 30px;
+        @keyframes popIn { from { transform: scale(0.7); } to { transform: scale(1); } }
+
+        .info-row {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-row i { color: var(--primary); width: 25px; }
+
+        .close { position: absolute; top: 20px; left: 25px; font-size: 28px; color: #666; cursor: pointer; }
+        .close:hover { color: var(--primary); }
+
+        /* تجميل الفوتر الجديد */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: #080808;
+            border-top: 1px solid #1a1a1a;
+            margin-top: 50px;
+        }
+
+        .company-address {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(255, 204, 0, 0.05);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px dashed var(--primary);
             color: var(--primary);
-            cursor: pointer;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            transition: 0.3s;
         }
 
-        .modal h3 { color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .modal ul { list-style: circle; padding-right: 20px; }
-        .modal li { margin-bottom: 8px; }
+        .company-address:hover {
+            background: rgba(255, 204, 0, 0.1);
+            transform: scale(1.05);
+        }
 
-        footer { text-align: center; padding: 30px; color: #555; }
+        .company-address i {
+            font-size: 1.4rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
+        }
+
+        .copyright { color: #555; font-size: 0.9rem; }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <header>
         <h1>الطنطاوي للصيانة</h1>
-        <p>خدمات صيانة منزلية احترافية على مدار الساعة</p>
+        <p style="color: #ccc; margin-top: 10px;">نحن نعتني بمنزلك كما لو كان منزلنا</p>
     </header>
 
     <div class="workers-container">
         <div class="worker-card">
-            <i class="fas fa-user-gear avatar"></i>
+            <i class="fas fa-tools avatar"></i>
             <h2>طنطاوي محمد</h2>
-            <button class="btn btn-info" onclick="openM('m1')">عرض التخصصات</button>
-            <a href="tel:01065276891" class="btn btn-call"><i class="fas fa-phone"></i> اتصل بالهاتف</a>
+            <button class="btn btn-info" onclick="openM('m1')">عرض الملف المهني</button>
+            <a href="tel:01065276891" class="btn btn-call"><i class="fas fa-phone-alt"></i> إتصال مباشر</a>
         </div>
 
         <div class="worker-card">
-            <i class="fas fa-user-shield avatar"></i>
+            <i class="fas fa-bolt avatar"></i>
             <h2>محمود طنطاوي</h2>
-            <button class="btn btn-info" onclick="openM('m2')">عرض التخصصات</button>
-            <a href="tel:01099064625" class="btn btn-call"><i class="fas fa-phone"></i> اتصل بالهاتف</a>
+            <button class="btn btn-info" onclick="openM('m2')">عرض الملف المهني</button>
+            <a href="tel:01099064625" class="btn btn-call"><i class="fas fa-phone-alt"></i> إتصال مباشر</a>
         </div>
 
         <div class="worker-card">
-            <i class="fas fa-user-check avatar"></i>
+            <i class="fas fa-plug avatar"></i>
             <h2>محمد احمد</h2>
-            <button class="btn btn-info" onclick="openM('m3')">عرض التخصصات</button>
-            <a href="tel:01094921010" class="btn btn-call"><i class="fas fa-phone"></i> اتصل بالهاتف</a>
+            <button class="btn btn-info" onclick="openM('m3')">عرض الملف المهني</button>
+            <a href="tel:01094921010" class="btn btn-call"><i class="fas fa-phone-alt"></i> إتصال مباشر</a>
         </div>
     </div>
 
     <div id="m1" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeM('m1')">&times;</span>
-            <h3>بيانات: طنطاوي محمد</h3>
-            <p><strong>رقم الهاتف:</strong> 01065276891</p>
-            <ul>
-                <li>فني كهرباء سلسيون</li>
-                <li>فني بوتوجازات</li>
-                <li>فني سخانات غاز وكهرباء</li>
-            </ul>
+            <h3>الملف الشخصي: طنطاوي محمد</h3>
+            <div class="info-row"><i class="fas fa-phone"></i> 01065276891</div>
+            <div class="info-row"><i class="fas fa-star"></i> فني كهرباء سلسيون وبوتوجازات وسخانات</div>
         </div>
     </div>
 
     <div id="m2" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeM('m2')">&times;</span>
-            <h3>بيانات: محمود طنطاوي</h3>
-            <p><strong>رقم الهاتف:</strong> 01099064625</p>
-            <ul>
-                <li>فني كهرباء سلسيون خبير</li>
-            </ul>
+            <h3>الملف الشخصي: محمود طنطاوي</h3>
+            <div class="info-row"><i class="fas fa-phone"></i> 01099064625</div>
+            <div class="info-row"><i class="fas fa-award"></i> فني كهرباء سلسيون خبير</div>
         </div>
     </div>
 
     <div id="m3" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeM('m3')">&times;</span>
-            <h3>بيانات: محمد احمد</h3>
-            <p><strong>رقم الهاتف:</strong> 01094921010</p>
-            <ul>
-                <li>فني كهرباء سلسيون</li>
-                <li>فني أجهزة كهربائية خبير</li>
-            </ul>
+            <h3>الملف الشخصي: محمد احمد</h3>
+            <div class="info-row"><i class="fas fa-phone"></i> 01094921010</div>
+            <div class="info-row"><i class="fas fa-tv"></i> فني أجهزة كهربائية وكهرباء سلسيون</div>
         </div>
     </div>
 
-    <footer>&copy; 2024 الطنطاوي للصيانة - الاحترافية هي عنواننا</footer>
+    <footer>
+        <div class="company-address">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>عنوان الشركة: سلمنت - بلبيس - الشرقيه</span>
+        </div>
+        <div class="copyright">
+            &copy; 2026 الطنطاوي للصيانة | جميع الحقوق محفوظة
+        </div>
+    </footer>
 
     <script>
         function openM(id) { document.getElementById(id).style.display = "block"; }
         function closeM(id) { document.getElementById(id).style.display = "none"; }
-        window.onclick = function(event) {
-            if (event.target.className === 'modal') { event.target.style.display = "none"; }
-        }
+        window.onclick = function(e) { if (e.target.className === 'modal') { e.target.style.display = "none"; } }
     </script>
 </body>
-</html>
+    </html>
